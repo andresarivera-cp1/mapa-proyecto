@@ -1,31 +1,42 @@
-// Crear mapa centrado en Popayán
+// 🔥 IMPORTAR FIREBASE (forma correcta)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+// 🔑 CONFIG (la tuya)
+const firebaseConfig = {
+  apiKey: "AIzaSyC7i13NFAQjYmE5wuBXW4ZQ1o1ptZBulws",
+  authDomain: "flowcity1-44199.firebaseapp.com",
+  databaseURL: "https://flowcity1-44199-default-rtdb.firebaseio.com",
+  projectId: "flowcity1-44199"
+};
+
+// 🔌 INICIALIZAR
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// 🗺️ MAPA
 var map = L.map('map').setView([2.4448, -76.6147], 13);
 
-// Cargar mapa base
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
 }).addTo(map);
 
-// Marcador de prueba
-L.marker([2.4448, -76.6147])
-  .addTo(map)
-  .bindPopup("Probando desde GitHub Pages 🚀")
-  .openPopup();
+// 📍 MARCADOR
+var marker = L.marker([2.4448, -76.6147]).addTo(map);
 
-// 🔥 Escuchar Firebase
-const ubicacionRef = window.ref(window.db, 'ubicacion');
+// 🔥 ESCUCHAR FIREBASE (AHORA SÍ FUNCIONA)
+const ubicacionRef = ref(db, 'ubicacion');
 
-window.onValue(ubicacionRef, (snapshot) => {
+onValue(ubicacionRef, (snapshot) => {
     const data = snapshot.val();
+
+    console.log("Datos Firebase:", data);
 
     if (data) {
         const lat = data.lat;
         const lng = data.lng;
 
-        // mover marcador
         marker.setLatLng([lat, lng]);
-
-        // mover el mapa
         map.setView([lat, lng], 15);
     }
 });
