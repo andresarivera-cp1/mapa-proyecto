@@ -25,7 +25,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 var marker = L.marker([2.4448, -76.6147]).addTo(map);
 
 // 🔥 ESCUCHAR FIREBASE (AHORA SÍ FUNCIONA)
-const ubicacionRef = ref(db, 'ubicacion');
+const ubicacionRef = ref(db, 'bus1');
 
 onValue(ubicacionRef, (snapshot) => {
     const data = snapshot.val();
