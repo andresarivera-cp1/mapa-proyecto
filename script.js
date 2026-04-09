@@ -1,3 +1,4 @@
+console.log("VERSION NUEVA - BUS1 🔥");
 // 🔥 IMPORTAR FIREBASE (forma correcta)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
