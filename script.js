@@ -2,6 +2,7 @@ console.log("VERSION NUEVA - BUS1 🔥");
 // 🔥 IMPORTAR FIREBASE (forma correcta)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"; //enviarvectorruta
 
 // 🔑 CONFIG (la tuya)
 const firebaseConfig = {
@@ -32,8 +33,6 @@ var popayanBounds = L.latLngBounds(
     [2.35, -76.72],
     [2.53, -76.54]
 );
-map.setMaxBounds(popayanBounds);
-maxBoundsViscosity: 1.0; // Evita que el usuario pueda arrastrar el mapa fuera de los límites
 
 // 📍 MARCADOR
 var marker = L.marker([2.4448, -76.6147]).addTo(map);
@@ -41,7 +40,11 @@ var marker = L.marker([2.4448, -76.6147]).addTo(map);
 // obtencion de rutas
 
 window.lineaTemporal = L.polyline([], { color: 'red' }).addTo(map);
-map.on('click', function(e) {
+function guardarRuta() {  //funcion guardar ruta en firebase
+    set(ref(db, "rutaBus1"), window.ruta);
+    console.log("Ruta guardada en Firebase 🔥");
+}
+map.on('click', function(e) {   //funcion obt coordenadas al hacer click 
     let punto = [e.latlng.lat, e.latlng.lng];
 
     window.ruta.push(punto);
