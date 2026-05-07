@@ -20,7 +20,7 @@ const db = getDatabase(app);
 window.ruta = []; //vector para definir ruta
 var map = L.map('map', {
     zoom: 15, // zoom inicial
-    minZoom: 14, // límite de zoom hacia afuera para mantener el área en Popayán
+    minZoom: 13, // límite de zoom hacia afuera para mantener el área en Popayán
     maxZoom: 19
 }).setView([2.4448, -76.6147], 13);
 
@@ -73,9 +73,9 @@ onValue(rutaRef, (snapshot) => {
 
     // dibujar ruta en el mapa
     window.lineaRuta = L.polyline(window.ruta, {
-        color: 'blue',
-        weight: 6,
-        opacity: 0.4,
+        color: rgb(27, 228, 255)
+        weight: 7,
+        opacity: 0.3,
         lineCap: 'round',
         lineJoin: 'round'
     }).addTo(map);
