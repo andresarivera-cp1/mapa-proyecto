@@ -16,7 +16,7 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 // 🗺️ MAPA
-let ruta = []; //vector para definir ruta
+window.ruta = []; //vector para definir ruta
 var map = L.map('map', {
     zoom: 15, // zoom inicial
     minZoom: 14, // límite de zoom hacia afuera para mantener el área en Popayán
@@ -40,16 +40,12 @@ var marker = L.marker([2.4448, -76.6147]).addTo(map);
 
 // obtencion de rutas
 
-let lineaTemporal = L.polyline([], { color: 'red' }).addTo(map);
+window.lineaTemporal = L.polyline([], { color: 'red' }).addTo(map);
 map.on('click', function(e) {
     let punto = [e.latlng.lat, e.latlng.lng];
 
-    ruta.push(punto);
-
-    console.log("Punto agregado:", punto);
-    console.log("Ruta:", ruta);
-
-    lineaTemporal.setLatLngs(ruta);
+    window.ruta.push(punto);
+    window.lineaTemporal.setLatLngs(window.ruta);
 });
 
 // 🔥 ESCUCHAR FIREBASE (AHORA SÍ FUNCIONA)
