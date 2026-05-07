@@ -22,7 +22,7 @@ var map = L.map('map', {
     zoom: 15, // zoom inicial
     minZoom: 13, // límite de zoom hacia afuera para mantener el área en Popayán
     maxZoom: 19  //limite de zoom hacia adentro para evitar perder calidad
-}).setView([2.4448, -76.6147], 13);
+}).setView([2.4448, -76.6120], 13);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -35,8 +35,18 @@ var popayanBounds = L.latLngBounds(
 );
 map.setMaxBounds(popayanBounds);
 
+var busIcon = L.icon({
+    iconUrl: 'img/auto1.png',
+
+    iconSize: [40, 40],     // tamaño
+    iconAnchor: [20, 20],   // centro del icono
+    popupAnchor: [0, -20]
+});
+
 //  MARCADOR
-var marker = L.marker([2.4448, -76.6147]).addTo(map);
+var marker = L.marker([2.4448, -76.6147], {
+    icon: busIcon
+}).addTo(map);
 
 // 🔥 ESCUCHAR FIREBASE 
 const ubicacionRef = ref(db, 'bus1');
