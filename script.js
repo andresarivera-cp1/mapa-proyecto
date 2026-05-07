@@ -17,8 +17,8 @@ const db = getDatabase(app);
 
 // 🗺️ MAPA
 var map = L.map('map', {
-    zoom: 13,
-    minZoom: 11, // límite de zoom hacia afuera para mantener el área en Popayán
+    zoom: 15,
+    minZoom: 13, // límite de zoom hacia afuera para mantener el área en Popayán
     maxZoom: 19
 }).setView([2.4448, -76.6147], 13);
 
