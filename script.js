@@ -37,6 +37,21 @@ maxBoundsViscosity: 1.0; // Evita que el usuario pueda arrastrar el mapa fuera d
 // 📍 MARCADOR
 var marker = L.marker([2.4448, -76.6147]).addTo(map);
 
+// obtencion de rutas
+
+let ruta = [];
+let lineaTemporal = L.polyline([], { color: 'red' }).addTo(map);
+map.on('click', function(e) {
+    let punto = [e.latlng.lat, e.latlng.lng];
+
+    ruta.push(punto);
+
+    console.log("Punto agregado:", punto);
+    console.log("Ruta:", ruta);
+
+    lineaTemporal.setLatLngs(ruta);
+});
+
 // 🔥 ESCUCHAR FIREBASE (AHORA SÍ FUNCIONA)
 const ubicacionRef = ref(db, 'bus1');
 
