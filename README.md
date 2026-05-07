@@ -1,4 +1,3 @@
 # mapa-proyecto
-mklhkjj
-este es un codigo
-Vamos a probar si funciona con el siguientes si
+Este es el codigo para el monitoreo de buses
+index codigo principal con la estructura del codigo
