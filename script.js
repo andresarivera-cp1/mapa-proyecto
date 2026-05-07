@@ -22,7 +22,7 @@ var map = L.map('map', {
     zoom: 15, // zoom inicial
     minZoom: 13, // límite de zoom hacia afuera para mantener el área en Popayán
     maxZoom: 19  //limite de zoom hacia adentro para evitar perder calidad
-}).setView([2.4448, -76.6250], 13);
+}).setView([2.4448, -76.7250], 13);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
