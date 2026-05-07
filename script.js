@@ -16,11 +16,25 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 // 🗺️ MAPA
-var map = L.map('map').setView([2.4448, -76.6147], 13);
+var map = L.map('map', {
+    zoom: 13,
+    minZoom: 11, // límite de zoom hacia afuera para mantener el área en Popayán
+    maxZoom: 19
+}).setView([2.4448, -76.6147], 13);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
 }).addTo(map);
+
+// Limitar el área visible para que no se salga de Popayán
+var popayanBounds = L.latLngBounds(
+    [2.35, -76.72],
+    [2.53, -76.54]
+);
+map.setMaxBounds(popayanBounds);
+map.on('drag', function() {
+    map.panInsideBounds(popayanBounds, { animate: false });
+});
 
 // 📍 MARCADOR
 var marker = L.marker([2.4448, -76.6147]).addTo(map);
