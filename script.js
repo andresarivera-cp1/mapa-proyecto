@@ -33,6 +33,7 @@ var popayanBounds = L.latLngBounds(
     [2.35, -76.72],
     [2.53, -76.54]
 );
+map.setMaxBounds(popayanBounds);
 
 //  MARCADOR
 var marker = L.marker([2.4448, -76.6147]).addTo(map);
@@ -73,9 +74,10 @@ onValue(rutaRef, (snapshot) => {
 
     // dibujar ruta en el mapa
     window.lineaRuta = L.polyline(window.ruta, {
-        color: 'blue',
-        weight: 7,
-        opacity: 0.4,
+        color: '#1be4ff',
+        weight: 8,
+        opacity: 0.5,
+        smoothFactor: 1.5,
         lineCap: 'round',
         lineJoin: 'round'
     }).addTo(map);
