@@ -21,7 +21,7 @@ window.ruta = []; //vector para definir ruta
 var map = L.map('map', {
     zoom: 15, // zoom inicial
     minZoom: 13, // límite de zoom hacia afuera para mantener el área en Popayán
-    maxZoom: 19
+    maxZoom: 19  //limite de zoom hacia adentro para evitar perder calidad
 }).setView([2.4448, -76.6147], 13);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -34,10 +34,10 @@ var popayanBounds = L.latLngBounds(
     [2.53, -76.54]
 );
 
-// 📍 MARCADOR
+//  MARCADOR
 var marker = L.marker([2.4448, -76.6147]).addTo(map);
 
-// 🔥 ESCUCHAR FIREBASE (AHORA SÍ FUNCIONA)
+// 🔥 ESCUCHAR FIREBASE 
 const ubicacionRef = ref(db, 'bus1');
 
 onValue(ubicacionRef, (snapshot) => {
@@ -73,8 +73,8 @@ onValue(rutaRef, (snapshot) => {
 
     // dibujar ruta en el mapa
     window.lineaRuta = L.polyline(window.ruta, {
-        color: rgb(27, 228, 255)
-        weight: 7,
+        color: rgb(27, 228, 255),
+        weight: 8,
         opacity: 0.3,
         lineCap: 'round',
         lineJoin: 'round'
