@@ -21,8 +21,8 @@ body {
   align-items: center;
   padding: 0 20px;
 
-  font-size: 1.8rem;
-  font-weight: 600;
+  font-size: 1.8rem;  // tamano de letra
+  font-weight: 420;   // grosor de letra
 }
 
 /* CONTENEDOR PRINCIPAL */
@@ -37,8 +37,8 @@ body {
   background: #e2e8f0;
   padding: 15px;
   
-  font-size: 1.3rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 300;
 
 }
 
