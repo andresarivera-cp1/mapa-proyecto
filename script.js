@@ -74,8 +74,8 @@ onValue(rutaRef, (snapshot) => {
     // dibujar ruta en el mapa
     window.lineaRuta = L.polyline(window.ruta, {
         color: 'blue',
-        weight: 8,
-        opacity: 0.3,
+        weight: 7,
+        opacity: 0.4,
         lineCap: 'round',
         lineJoin: 'round'
     }).addTo(map);
