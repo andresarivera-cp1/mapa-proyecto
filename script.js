@@ -40,10 +40,12 @@ var marker = L.marker([2.4448, -76.6147]).addTo(map);
 // obtencion de rutas
 
 window.lineaTemporal = L.polyline([], { color: 'red' }).addTo(map);
-function guardarRuta() {  //funcion guardar ruta en firebase
+
+window.guardarRuta = function () {  //funcion para guardar ruta en firebase
+    console.log("Intentando guardar...");
     set(ref(db, "rutaBus1"), window.ruta);
     console.log("Ruta guardada en Firebase 🔥");
-}
+};
 map.on('click', function(e) {   //funcion obt coordenadas al hacer click 
     let punto = [e.latlng.lat, e.latlng.lng];
 
