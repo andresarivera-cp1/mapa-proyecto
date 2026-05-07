@@ -32,9 +32,7 @@ var popayanBounds = L.latLngBounds(
     [2.53, -76.54]
 );
 map.setMaxBounds(popayanBounds);
-map.on('drag', function() {
-    map.panInsideBounds(popayanBounds, { animate: false });
-});
+maxBoundsViscosity: 1.0; // Evita que el usuario pueda arrastrar el mapa fuera de los límites
 
 // 📍 MARCADOR
 var marker = L.marker([2.4448, -76.6147]).addTo(map);
@@ -52,6 +50,6 @@ onValue(ubicacionRef, (snapshot) => {
         const lng = data.lng;
 
         marker.setLatLng([lat, lng]);
-        map.setView([lat, lng], 15);
+        map.panTo([lat, lng]);
     }
 });
