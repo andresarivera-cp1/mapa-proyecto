@@ -37,22 +37,6 @@ var popayanBounds = L.latLngBounds(
 // 📍 MARCADOR
 var marker = L.marker([2.4448, -76.6147]).addTo(map);
 
-// obtencion de rutas
-
-window.lineaTemporal = L.polyline([], { color: 'red' }).addTo(map);
-
-window.guardarRuta = function () {  //funcion para guardar ruta en firebase
-    console.log("Intentando guardar...");
-    set(ref(db, "rutaBus1"), window.ruta);
-    console.log("Ruta guardada en Firebase 🔥");
-};
-map.on('click', function(e) {   //funcion obt coordenadas al hacer click 
-    let punto = [e.latlng.lat, e.latlng.lng];
-
-    window.ruta.push(punto);
-    window.lineaTemporal.setLatLngs(window.ruta);
-});
-
 // 🔥 ESCUCHAR FIREBASE (AHORA SÍ FUNCIONA)
 const ubicacionRef = ref(db, 'bus1');
 
@@ -68,4 +52,31 @@ onValue(ubicacionRef, (snapshot) => {
         marker.setLatLng([lat, lng]);
         map.panTo([lat, lng]);
     }
+});
+
+const rutaRef = ref(db, "rutaBus1");
+
+onValue(rutaRef, (snapshot) => {
+    const data = snapshot.val();
+
+    console.log("Ruta desde Firebase:", data);
+
+    if (!data) return;
+
+    // guardar en memoria
+    window.ruta = data;
+
+    // borrar ruta anterior si existe
+    if (window.lineaRuta) {
+        map.removeLayer(window.lineaRuta);
+    }
+
+    // dibujar ruta en el mapa
+    window.lineaRuta = L.polyline(window.ruta, {
+        color: 'blue',
+        weight: 6,
+        opacity: 0.4,
+        lineCap: 'round',
+        lineJoin: 'round'
+    }).addTo(map);
 });
