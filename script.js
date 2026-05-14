@@ -49,9 +49,9 @@ var marker = L.marker([2.4448, -76.6147], {
 }).addTo(map);
 
 // 🔥 ESCUCHAR FIREBASE 
-const ubicacionRef = ref(db, 'bus1');
+const ubicacionRef = ref(db, 'bus1');   //escucha ubicacion del bus1
 
-onValue(ubicacionRef, (snapshot) => {
+onValue(ubicacionRef, (snapshot) => {  //si cambia la ubicacion, se ejecuta esta función
     const data = snapshot.val();
 
     console.log("Datos Firebase:", data);
@@ -60,8 +60,8 @@ onValue(ubicacionRef, (snapshot) => {
         const lat = data.lat;
         const lng = data.lng;
 
-        marker.setLatLng([lat, lng]);
-        map.panTo([lat, lng]);
+        marker.setLatLng([lat, lng]); // mover marcador a nueva ubicación
+        map.panTo([lat, lng]);  // centrar mapa en nueva ubicación
     }
 });
 
@@ -90,5 +90,26 @@ onValue(rutaRef, (snapshot) => {
         smoothFactor: 1.5,
         lineCap: 'round',
         lineJoin: 'round'
+    }).addTo(map);
+});
+
+const rutaRef2 = ref(db, "rutaBus2");
+
+onValue(rutaRef2, (snapshot) => {
+    const data = snapshot.val();
+
+    console.log("Ruta 2:", data);
+
+    if (!data) return;
+
+    if (window.lineaRuta2) {
+        map.removeLayer(window.lineaRuta2);
+    }
+
+    window.lineaRuta2 = L.polyline(data, {
+        color: '#1fb241',
+        weight: 8,
+        opacity: 0.5,
+        smoothFactor: 1.5
     }).addTo(map);
 });
