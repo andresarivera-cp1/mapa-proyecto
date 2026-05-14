@@ -107,9 +107,9 @@ onValue(rutaRef2, (snapshot) => {
     }
 
     window.lineaRuta2 = L.polyline(data, {
-        color: '#1fb241',
+        color: '#121a89',
         weight: 8,
         opacity: 0.5,
-        smoothFactor: 1.5
+        smoothFactor: 1.6
     }).addTo(map);
 });
