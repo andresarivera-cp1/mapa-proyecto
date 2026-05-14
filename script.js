@@ -35,12 +35,14 @@ var popayanBounds = L.latLngBounds(
 );
 map.setMaxBounds(popayanBounds);
 
+// BUS 1 /////////////////////////////////
+
 var busIcon = L.icon({
     iconUrl: 'img/auto1.png',
 
     iconSize: [40, 40],     // tamaño
     iconAnchor: [20, 20],   // centro del icono
-    popupAnchor: [0, -20]
+    popupAnchor: [0, -40]
 });
 
 //  MARCADOR
@@ -91,6 +93,30 @@ onValue(rutaRef, (snapshot) => {
         lineCap: 'round',
         lineJoin: 'round'
     }).addTo(map);
+});
+
+//// BUS 2/////////////////////////////////
+
+var busIcon2 = L.icon({
+    iconUrl: 'img/auto2.png',
+
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -40]
+});
+
+var marker2 = L.marker([2.4448, -76.6147], {
+    icon: busIcon2
+}).addTo(map);
+
+const ubicacionRef2 = ref(db, 'bus2');
+
+onValue(ubicacionRef2, (snapshot) => {
+    const data = snapshot.val();
+
+    if (data) {
+        marker2.setLatLng([data.lat, data.lng]);
+    }
 });
 
 const rutaRef2 = ref(db, "rutaBus2");
