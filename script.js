@@ -63,7 +63,7 @@ onValue(ubicacionRef, (snapshot) => {  //si cambia la ubicacion, se ejecuta esta
         const lng = data.lng;
 
         marker.setLatLng([lat, lng]); // mover marcador a nueva ubicación
-        map.panTo([lat, lng]);  // centrar mapa en nueva ubicación
+        //map.panTo([lat, lng]);  // centrar mapa en nueva ubicación
     }
 });
 
@@ -137,5 +137,5 @@ onValue(rutaRef2, (snapshot) => {
         weight: 8,
         opacity: 0.5,
         smoothFactor: 1.6
-    }).addTo(map);
+    }).addTo(map);  //prueba
 });
