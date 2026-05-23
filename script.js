@@ -69,6 +69,19 @@ onValue(ubicacionRef, (snapshot) => {  //si cambia la ubicacion, se ejecuta esta
 
 const rutaRef = ref(db, "rutaBus1");
 
+onValue(rutaRef, (snapshot) => {
+
+    const data = snapshot.val();
+
+    console.log("Ruta 1:", data);
+
+    if (!data) return;
+
+    // guardar ruta
+    window.ruta = data;
+
+});
+
 
 let lineaRecorrida = null;
 let lineaPendiente = null;
