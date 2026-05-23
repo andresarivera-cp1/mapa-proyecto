@@ -4,7 +4,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 import { set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"; //enviarvectorruta
 
-// 🔑 CONFIG (la tuya)
+//CONFIG 
 const firebaseConfig = {
   apiKey: "AIzaSyC7i13NFAQjYmE5wuBXW4ZQ1o1ptZBulws",
   authDomain: "flowcity1-44199.firebaseapp.com",
@@ -12,11 +12,11 @@ const firebaseConfig = {
   projectId: "flowcity1-44199"
 };
 
-// 🔌 INICIALIZAR
+// INICIALIZAR
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// 🗺️ MAPA
+// MAPA
 window.ruta = []; //vector para definir ruta
 var map = L.map('map', {
     zoom: 15, // zoom inicial
@@ -67,6 +67,8 @@ onValue(ubicacionRef, (snapshot) => {  //si cambia la ubicacion, se ejecuta esta
     }
 });
 
+///// Bus1 - RUTA
+
 const rutaRef = ref(db, "rutaBus1");
 
 let lineaRecorrida = null;
@@ -86,7 +88,6 @@ onValue(rutaRef, (snapshot) => {
 
 function actualizarRutaVisual(ruta, lat, lng) {
 
-    // evitar errores si aún no carga
     if (!ruta || ruta.length === 0) return;
 
     let indiceMasCercano = 0;
@@ -103,16 +104,21 @@ function actualizarRutaVisual(ruta, lat, lng) {
             distanciaMin = distancia;
             indiceMasCercano = i;
         }
+    
+        if (distanciaMin > 80) {  // si el bus se aleja demasiado de la ruta, no actualizar 
+            console.log("Bus fuera de ruta");
+            return;
+        }
     });
 
     const parteRecorrida = ruta.slice(0, indiceMasCercano + 1);
     const partePendiente = ruta.slice(indiceMasCercano);
 
-    // borrar líneas anteriores
+    // borrar líneas anteriores se divide ruta
     if (lineaRecorrida) map.removeLayer(lineaRecorrida);
     if (lineaPendiente) map.removeLayer(lineaPendiente);
 
-    // ruta recorrida
+    //recorrida
     lineaRecorrida = L.polyline(parteRecorrida, {
         color: '#fe24bc',
         weight: 8,
@@ -121,7 +127,7 @@ function actualizarRutaVisual(ruta, lat, lng) {
         lineCap: 'round'
     }).addTo(map);
 
-    // ruta faltante
+    //faltante
     lineaPendiente = L.polyline(partePendiente, {
         color: '#fe24bc',
         weight: 8,
@@ -130,7 +136,7 @@ function actualizarRutaVisual(ruta, lat, lng) {
     }).addTo(map);
 }
 
-// escuchar ubicación
+// escuchar ubicacion
 onValue(ubicacionRef, (snapshot) => {
 
     const data = snapshot.val();
