@@ -69,30 +69,71 @@ onValue(ubicacionRef, (snapshot) => {  //si cambia la ubicacion, se ejecuta esta
 
 const rutaRef = ref(db, "rutaBus1");
 
-onValue(rutaRef, (snapshot) => {
-    const data = snapshot.val();
 
-    console.log("Ruta desde Firebase:", data);
+let lineaRecorrida = null;
+let lineaPendiente = null;
 
-    if (!data) return;
+function actualizarRutaVisual(ruta, lat, lng) {
 
-    // guardar en memoria
-    window.ruta = data;
+    // buscar punto más cercano de la ruta al bus
+    let indiceMasCercano = 0;
+    let distanciaMin = Infinity;
 
-    // borrar ruta anterior si existe
-    if (window.lineaRuta) {
-        map.removeLayer(window.lineaRuta);
-    }
+    ruta.forEach((punto, i) => {
 
-    // dibujar ruta en el mapa
-    window.lineaRuta = L.polyline(window.ruta, {
+        const distancia = map.distance(
+            [lat, lng],
+            [punto[0], punto[1]]
+        );
+
+        if (distancia < distanciaMin) {
+            distanciaMin = distancia;
+            indiceMasCercano = i;
+        }
+    });
+
+    // dividir ruta
+    const parteRecorrida = ruta.slice(0, indiceMasCercano + 1);
+    const partePendiente = ruta.slice(indiceMasCercano);
+
+    // borrar líneas anteriores
+    if (lineaRecorrida) map.removeLayer(lineaRecorrida);
+    if (lineaPendiente) map.removeLayer(lineaPendiente);
+
+    // línea recorrida
+    lineaRecorrida = L.polyline(parteRecorrida, {
         color: '#fe24bc',
         weight: 8,
-        opacity: 0.5,
-        smoothFactor: 1.5,
-        lineCap: 'round',
-        lineJoin: 'round'
+        opacity: 0.2, // más transparente
+        dashArray: '10, 15', // punteada
+        lineCap: 'round'
     }).addTo(map);
+
+    // línea pendiente
+    lineaPendiente = L.polyline(partePendiente, {
+        color: '#fe24bc',
+        weight: 8,
+        opacity: 0.7,
+        lineCap: 'round'
+    }).addTo(map);
+}
+
+onValue(ubicacionRef, (snapshot) => {
+
+    const data = snapshot.val();
+
+    if (data) {
+
+        const lat = data.lat;
+        const lng = data.lng;
+
+        marker.setLatLng([lat, lng]);
+
+        // actualizar visual de la ruta
+        if (window.ruta) {
+            actualizarRutaVisual(window.ruta, lat, lng);
+        }
+    }
 });
 
 //// BUS 2/////////////////////////////////
