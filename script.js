@@ -69,26 +69,26 @@ onValue(ubicacionRef, (snapshot) => {  //si cambia la ubicacion, se ejecuta esta
 
 const rutaRef = ref(db, "rutaBus1");
 
+let lineaRecorrida = null;
+let lineaPendiente = null;
+
+// cargar ruta desde firebase
 onValue(rutaRef, (snapshot) => {
 
     const data = snapshot.val();
 
-    console.log("Ruta 1:", data);
+    console.log("Ruta Firebase:", data);
 
     if (!data) return;
 
-    // guardar ruta
     window.ruta = data;
-
 });
-
-
-let lineaRecorrida = null;
-let lineaPendiente = null;
 
 function actualizarRutaVisual(ruta, lat, lng) {
 
-    // buscar punto más cercano de la ruta al bus
+    // evitar errores si aún no carga
+    if (!ruta || ruta.length === 0) return;
+
     let indiceMasCercano = 0;
     let distanciaMin = Infinity;
 
@@ -105,7 +105,6 @@ function actualizarRutaVisual(ruta, lat, lng) {
         }
     });
 
-    // dividir ruta
     const parteRecorrida = ruta.slice(0, indiceMasCercano + 1);
     const partePendiente = ruta.slice(indiceMasCercano);
 
@@ -113,16 +112,16 @@ function actualizarRutaVisual(ruta, lat, lng) {
     if (lineaRecorrida) map.removeLayer(lineaRecorrida);
     if (lineaPendiente) map.removeLayer(lineaPendiente);
 
-    // línea recorrida
+    // ruta recorrida
     lineaRecorrida = L.polyline(parteRecorrida, {
         color: '#fe24bc',
         weight: 8,
-        opacity: 0.2, // más transparente
-        dashArray: '10, 15', // punteada
+        opacity: 0.2,
+        dashArray: '10, 15',
         lineCap: 'round'
     }).addTo(map);
 
-    // línea pendiente
+    // ruta faltante
     lineaPendiente = L.polyline(partePendiente, {
         color: '#fe24bc',
         weight: 8,
@@ -131,6 +130,7 @@ function actualizarRutaVisual(ruta, lat, lng) {
     }).addTo(map);
 }
 
+// escuchar ubicación
 onValue(ubicacionRef, (snapshot) => {
 
     const data = snapshot.val();
@@ -142,10 +142,7 @@ onValue(ubicacionRef, (snapshot) => {
 
         marker.setLatLng([lat, lng]);
 
-        // actualizar visual de la ruta
-        if (window.ruta) {
-            actualizarRutaVisual(window.ruta, lat, lng);
-        }
+        actualizarRutaVisual(window.ruta, lat, lng);
     }
 });
 
