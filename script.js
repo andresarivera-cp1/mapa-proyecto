@@ -1,5 +1,6 @@
 console.log("VERSION 2.0 Monitoreo de buses ");
 // Importar firebase 
+import { crearTrackingBus } from "./js/tracker.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 import { set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"; //enviarvectorruta
@@ -63,86 +64,7 @@ var marker2 = L.marker([2.4448, -76.6147], {
     icon: busIcon2
 }).addTo(map);
 
-// Funcion para crear trazar, actualizar ruta y marcar posición del bus
 
-function crearTrackingBus({
-    busRef,
-    rutaRef,
-    marker,
-    color
-}) {
-
-    let lineaRecorrida = null;
-    let lineaPendiente = null;
-    let ruta = [];
-
-    onValue(rutaRef, (snapshot) => {
-        const data = snapshot.val();
-        if (!data) return;
-
-        ruta = data;
-    });
-
-    function actualizar(lat, lng) {
-
-        if (!ruta || ruta.length === 0) return;
-
-        let indiceMasCercano = 0;
-        let distanciaMin = Infinity;
-
-        ruta.forEach((punto, i) => {
-
-            const distancia = map.distance(
-                [lat, lng],
-                [punto[0], punto[1]]
-            );
-
-            if (distancia < distanciaMin) {
-                distanciaMin = distancia;
-                indiceMasCercano = i;
-            }
-        });
-
-        if (distanciaMin > 80) return;
-
-        const parteRecorrida = ruta.slice(0, indiceMasCercano + 1);
-        const partePendiente = ruta.slice(indiceMasCercano);
-
-        // Se crea una sola vez cada línea, luego solo se actualizan 
-        if (!lineaRecorrida) {
-            lineaRecorrida = L.polyline([], {
-                color,
-                weight: 8,
-                opacity: 0.2,
-                dashArray: '10, 15',
-                lineCap: 'round'
-            }).addTo(map);
-        }
-
-        if (!lineaPendiente) {
-            lineaPendiente = L.polyline([], {
-                color,
-                weight: 8,
-                opacity: 0.7,
-                lineCap: 'round'
-            }).addTo(map);
-        }
-
-        //Actualizar
-        lineaRecorrida.setLatLngs(parteRecorrida);
-        lineaPendiente.setLatLngs(partePendiente);
-    }
-
-    onValue(busRef, (snapshot) => {
-        const data = snapshot.val();
-        if (!data) return;
-
-        marker.setLatLng([data.lat, data.lng]);
-        actualizar(data.lat, data.lng);
-    });
-}
-
-// Se crea el seguimiento para cada bus 
 
 crearTrackingBus({
     busRef: ref(db, "bus1"),
