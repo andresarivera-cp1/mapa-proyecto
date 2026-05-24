@@ -1,10 +1,11 @@
-console.log("VERSION NUEVA - BUS1 🔥");
-// 🔥 IMPORTAR FIREBASE (forma correcta)
+console.log("VERSION 2.0 Monitoreo de buses ");
+// Importar firebase 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 import { set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"; //enviarvectorruta
 
-//CONFIG 
+//Configuración de Firebase
+
 const firebaseConfig = {
   apiKey: "AIzaSyC7i13NFAQjYmE5wuBXW4ZQ1o1ptZBulws",
   authDomain: "flowcity1-44199.firebaseapp.com",
@@ -53,18 +54,16 @@ var busIcon2 = L.icon({
     popupAnchor: [0, -40]
 });
 
-//  MARCADOR1
+//  Marcadores de buses para el mapa
 var marker = L.marker([2.4448, -76.6147], {
     icon: busIcon
 }).addTo(map);
 
-// MARCADOR2
 var marker2 = L.marker([2.4448, -76.6147], {
     icon: busIcon2
 }).addTo(map);
 
-
-
+// Funcion para crear trazar, actualizar ruta y marcar posición del bus
 
 function crearTrackingBus({
     busRef,
@@ -109,7 +108,7 @@ function crearTrackingBus({
         const parteRecorrida = ruta.slice(0, indiceMasCercano + 1);
         const partePendiente = ruta.slice(indiceMasCercano);
 
-        // 🔥 CREAR UNA VEZ (NO dentro del update)
+        // Se crea una sola vez cada línea, luego solo se actualizan 
         if (!lineaRecorrida) {
             lineaRecorrida = L.polyline([], {
                 color,
@@ -129,7 +128,7 @@ function crearTrackingBus({
             }).addTo(map);
         }
 
-        // 🔥 SOLO ACTUALIZAR
+        //Actualizar
         lineaRecorrida.setLatLngs(parteRecorrida);
         lineaPendiente.setLatLngs(partePendiente);
     }
@@ -142,6 +141,8 @@ function crearTrackingBus({
         actualizar(data.lat, data.lng);
     });
 }
+
+// Se crea el seguimiento para cada bus 
 
 crearTrackingBus({
     busRef: ref(db, "bus1"),
