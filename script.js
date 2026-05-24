@@ -67,6 +67,7 @@ var marker2 = L.marker([2.4448, -76.6147], {
 
 
 crearTrackingBus({
+    map,
     busRef: ref(db, "bus1"),
     rutaRef: ref(db, "rutaBus1"),
     marker: marker,
@@ -74,6 +75,7 @@ crearTrackingBus({
 });
 
 crearTrackingBus({
+    map,
     busRef: ref(db, "bus2"),
     rutaRef: ref(db, "rutaBus2"),
     marker: marker2,
