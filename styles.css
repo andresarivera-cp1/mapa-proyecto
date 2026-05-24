@@ -39,7 +39,50 @@ body {
   
   font-size: 1.1rem;
   font-weight: 300;
+  position: relative;
+  transition: width 260ms ease, padding 260ms ease;
 
+
+/* when collapsed */
+#sidebar.collapsed {
+  width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  overflow: hidden;
+}
+
+#sidebar #sidebar-content {
+  transition: opacity 200ms ease 0s;
+}
+
+#sidebar.collapsed #sidebar-content {
+  opacity: 0;
+}
+
+/* Toggle button */
+#sidebar-toggle {
+  position: absolute;
+  top: 8px;
+  right: -18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  border: 0;
+  background: #1e293b;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+#sidebar-toggle:focus { outline: 2px solid #93c5fd; }
+
+#sidebar.collapsed #sidebar-toggle {
+  right: -18px;
+  transform: rotate(180deg);
+}
 }
 
 /* MAPA */

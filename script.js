@@ -22,6 +22,32 @@ const db = getDatabase(app);
 // MAPA
 const { map, marker, marker2 } = crearMapa();
 
+// Sidebar toggle behavior: collapse/expand with a button
+const sidebar = document.getElementById('sidebar');
+const toggle = document.getElementById('sidebar-toggle');
+
+function setSidebarCollapsed(collapsed) {
+  if (collapsed) {
+    sidebar.classList.add('collapsed');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = '▶';
+  } else {
+    sidebar.classList.remove('collapsed');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.textContent = '◀';
+  }
+  try { localStorage.setItem('sidebarCollapsed', collapsed ? '1' : '0'); } catch (e) {}
+}
+
+toggle.addEventListener('click', () => {
+  const collapsed = sidebar.classList.toggle('collapsed');
+  setSidebarCollapsed(collapsed);
+});
+
+// restore state from localStorage
+const saved = localStorage.getItem('sidebarCollapsed');
+if (saved === '1') setSidebarCollapsed(true);
+
 
 
 crearTrackingBus({
