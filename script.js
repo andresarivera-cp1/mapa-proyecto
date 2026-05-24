@@ -37,6 +37,10 @@ function setSidebarCollapsed(collapsed) {
     toggle.textContent = '◀';
   }
   try { localStorage.setItem('sidebarCollapsed', collapsed ? '1' : '0'); } catch (e) {}
+  // Update Leaflet map size after transition
+  if (typeof map !== 'undefined' && map && typeof map.invalidateSize === 'function') {
+    setTimeout(() => map.invalidateSize(), 300);
+  }
 }
 
 toggle.addEventListener('click', () => {
