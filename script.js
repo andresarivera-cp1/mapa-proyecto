@@ -109,21 +109,29 @@ function crearTrackingBus({
         const parteRecorrida = ruta.slice(0, indiceMasCercano + 1);
         const partePendiente = ruta.slice(indiceMasCercano);
 
-        if (lineaRecorrida) map.removeLayer(lineaRecorrida);
-        if (lineaPendiente) map.removeLayer(lineaPendiente);
+        // 🔥 CREAR UNA VEZ (NO dentro del update)
+        if (!lineaRecorrida) {
+            lineaRecorrida = L.polyline([], {
+                color,
+                weight: 8,
+                opacity: 0.2,
+                dashArray: '10, 15',
+                lineCap: 'round'
+            }).addTo(map);
+        }
 
-        lineaRecorrida = L.polyline(parteRecorrida, {
-            color,
-            weight: 8,
-            opacity: 0.2,
-            dashArray: '10, 15'
-        }).addTo(map);
+        if (!lineaPendiente) {
+            lineaPendiente = L.polyline([], {
+                color,
+                weight: 8,
+                opacity: 0.7,
+                lineCap: 'round'
+            }).addTo(map);
+        }
 
-        lineaPendiente = L.polyline(partePendiente, {
-            color,
-            weight: 8,
-            opacity: 0.7
-        }).addTo(map);
+        // 🔥 SOLO ACTUALIZAR
+        lineaRecorrida.setLatLngs(parteRecorrida);
+        lineaPendiente.setLatLngs(partePendiente);
     }
 
     onValue(busRef, (snapshot) => {
