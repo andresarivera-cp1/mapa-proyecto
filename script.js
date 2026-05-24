@@ -35,7 +35,7 @@ var popayanBounds = L.latLngBounds(
 );
 map.setMaxBounds(popayanBounds);
 
-// BUS 1 /////////////////////////////////
+// iconos para buses
 
 var busIcon = L.icon({
     iconUrl: 'img/auto1.png',
@@ -45,115 +45,6 @@ var busIcon = L.icon({
     popupAnchor: [0, -40]
 });
 
-//  MARCADOR
-var marker = L.marker([2.4448, -76.6147], {
-    icon: busIcon
-}).addTo(map);
-
-// 🔥 ESCUCHAR FIREBASE 
-const ubicacionRef = ref(db, 'bus1');   //escucha ubicacion del bus1
-
-onValue(ubicacionRef, (snapshot) => {  //si cambia la ubicacion, se ejecuta esta función
-    const data = snapshot.val();
-
-    console.log("Datos Firebase:", data);
-
-    if (data) {
-        const lat = data.lat;
-        const lng = data.lng;
-
-        marker.setLatLng([lat, lng]); // mover marcador a nueva ubicación
-        //map.panTo([lat, lng]);  // centrar mapa en nueva ubicación
-    }
-});
-
-///// Bus1 - RUTA
-
-const rutaRef = ref(db, "rutaBus1");
-
-let lineaRecorrida = null;
-let lineaPendiente = null;
-
-// cargar ruta desde firebase
-onValue(rutaRef, (snapshot) => {
-
-    const data = snapshot.val();
-
-    console.log("Ruta Firebase:", data);
-
-    if (!data) return;
-
-    window.ruta = data;
-});
-
-function actualizarRutaVisual(ruta, lat, lng) {
-
-    if (!ruta || ruta.length === 0) return;
-
-    let indiceMasCercano = 0;
-    let distanciaMin = Infinity;
-
-    ruta.forEach((punto, i) => {
-
-        const distancia = map.distance(
-            [lat, lng],
-            [punto[0], punto[1]]
-        );
-
-        if (distancia < distanciaMin) {
-            distanciaMin = distancia;
-            indiceMasCercano = i;
-        }
-    
-        if (distanciaMin > 80) {  // si el bus se aleja demasiado de la ruta, no actualizar 
-            console.log("Bus fuera de ruta");
-            return;
-        }
-    });
-
-    const parteRecorrida = ruta.slice(0, indiceMasCercano + 1);
-    const partePendiente = ruta.slice(indiceMasCercano);
-
-    // borrar líneas anteriores se divide ruta
-    if (lineaRecorrida) map.removeLayer(lineaRecorrida);
-    if (lineaPendiente) map.removeLayer(lineaPendiente);
-
-    //recorrida
-    lineaRecorrida = L.polyline(parteRecorrida, {
-        color: '#fe24bc',
-        weight: 8,
-        opacity: 0.2,
-        dashArray: '10, 15',
-        lineCap: 'round'
-    }).addTo(map);
-
-    //faltante
-    lineaPendiente = L.polyline(partePendiente, {
-        color: '#fe24bc',
-        weight: 8,
-        opacity: 0.7,
-        lineCap: 'round'
-    }).addTo(map);
-}
-
-// escuchar ubicacion
-onValue(ubicacionRef, (snapshot) => {
-
-    const data = snapshot.val();
-
-    if (data) {
-
-        const lat = data.lat;
-        const lng = data.lng;
-
-        marker.setLatLng([lat, lng]);
-
-        actualizarRutaVisual(window.ruta, lat, lng);
-    }
-});
-
-//// BUS 2/////////////////////////////////
-
 var busIcon2 = L.icon({
     iconUrl: 'img/auto2.png',
 
@@ -162,37 +53,99 @@ var busIcon2 = L.icon({
     popupAnchor: [0, -40]
 });
 
+//  MARCADOR1
+var marker = L.marker([2.4448, -76.6147], {
+    icon: busIcon
+}).addTo(map);
+
+// MARCADOR2
 var marker2 = L.marker([2.4448, -76.6147], {
     icon: busIcon2
 }).addTo(map);
 
-const ubicacionRef2 = ref(db, 'bus2');
 
-onValue(ubicacionRef2, (snapshot) => {
-    const data = snapshot.val();
 
-    if (data) {
-        marker2.setLatLng([data.lat, data.lng]);
+
+function crearTrackingBus({
+    busRef,
+    rutaRef,
+    marker,
+    color
+}) {
+
+    let lineaRecorrida = null;
+    let lineaPendiente = null;
+    let ruta = [];
+
+    onValue(rutaRef, (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+
+        ruta = data;
+    });
+
+    function actualizar(lat, lng) {
+
+        if (!ruta || ruta.length === 0) return;
+
+        let indiceMasCercano = 0;
+        let distanciaMin = Infinity;
+
+        ruta.forEach((punto, i) => {
+
+            const distancia = map.distance(
+                [lat, lng],
+                [punto[0], punto[1]]
+            );
+
+            if (distancia < distanciaMin) {
+                distanciaMin = distancia;
+                indiceMasCercano = i;
+            }
+        });
+
+        if (distanciaMin > 80) return;
+
+        const parteRecorrida = ruta.slice(0, indiceMasCercano + 1);
+        const partePendiente = ruta.slice(indiceMasCercano);
+
+        if (lineaRecorrida) map.removeLayer(lineaRecorrida);
+        if (lineaPendiente) map.removeLayer(lineaPendiente);
+
+        lineaRecorrida = L.polyline(parteRecorrida, {
+            color,
+            weight: 8,
+            opacity: 0.2,
+            dashArray: '10, 15'
+        }).addTo(map);
+
+        lineaPendiente = L.polyline(partePendiente, {
+            color,
+            weight: 8,
+            opacity: 0.7
+        }).addTo(map);
     }
+
+    onValue(busRef, (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+
+        marker.setLatLng([data.lat, data.lng]);
+        actualizar(data.lat, data.lng);
+    });
+}
+
+crearTrackingBus({
+    busRef: ref(db, "bus1"),
+    rutaRef: ref(db, "rutaBus1"),
+    marker: marker,
+    color: "#fe24bc"
 });
 
-const rutaRef2 = ref(db, "rutaBus2");
-
-onValue(rutaRef2, (snapshot) => {
-    const data = snapshot.val();
-
-    console.log("Ruta 2:", data);
-
-    if (!data) return;
-
-    if (window.lineaRuta2) {
-        map.removeLayer(window.lineaRuta2);
-    }
-
-    window.lineaRuta2 = L.polyline(data, {
-        color: '#121a89',
-        weight: 8,
-        opacity: 0.5,
-        smoothFactor: 1.6
-    }).addTo(map);  //prueba
+crearTrackingBus({
+    busRef: ref(db, "bus2"),
+    rutaRef: ref(db, "rutaBus2"),
+    marker: marker2,
+    color: "#121a89"
 });
+
