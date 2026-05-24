@@ -1,3 +1,5 @@
+import { onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
 export function crearTrackingBus({
     map,
     busRef,
