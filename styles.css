@@ -35,8 +35,6 @@ body {
   flex: 1 1 auto;
   display: flex;
   min-height: 0;
-  justify-content: flex-start;
-  align-items: stretch;
 }
 
 /* SIDEBAR */
@@ -100,9 +98,5 @@ body {
 
 /* MAPA */
 #map {
-  flex: 0 0 85%;
-  max-width: 85%;
-  min-width: 320px;
-  margin: 0;
-  margin-left: -20px;
+  flex: 1;
 }
