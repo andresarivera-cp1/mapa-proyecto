@@ -14,9 +14,9 @@ export function crearMapa() {
 
     const popayanBounds = L.latLngBounds([
         [2.35, -76.72],
-        [2.53, -76.54]
+        [2.53, -76.50]
     ]);
-   // map.setMaxBounds(popayanBounds);
+    map.setMaxBounds(popayanBounds);
 
     const busIcon = L.icon({
         iconUrl: 'img/auto1.png',
