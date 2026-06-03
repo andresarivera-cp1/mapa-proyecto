@@ -22,6 +22,12 @@ export function crearTrackingBus({
         ruta = data;
     });
 
+    // Función para ajustar peso de línea según zoom
+    function getWeightForZoom(baseWeight) {
+        const zoom = map.getZoom();
+        return Math.max(1, baseWeight * (zoom / 16));
+    }
+
     function actualizar(lat, lng) {
 
         if (!ruta || ruta.length === 0) return;
@@ -54,7 +60,9 @@ export function crearTrackingBus({
                 weight: 8,
                 opacity: 0.2,
                 dashArray: '10, 15',
-                lineCap: 'round'
+                lineCap: 'round',
+                lineJoin: 'round',
+                interactive: false
             }).addTo(map);
         }
 
@@ -63,9 +71,18 @@ export function crearTrackingBus({
                 color,
                 weight: 8,
                 opacity: 0.5,
-                lineCap: 'round'
+                lineCap: 'round',
+                lineJoin: 'round',
+                interactive: false
             }).addTo(map);
         }
+
+        // Ajustar peso dinámicamente según zoom
+        const weightRecorrida = getWeightForZoom(8);
+        const weightPendiente = getWeightForZoom(8);
+        
+        lineaRecorrida.setStyle({ weight: weightRecorrida });
+        lineaPendiente.setStyle({ weight: weightPendiente });
 
         //Actualizar
         lineaRecorrida.setLatLngs(parteRecorrida);   //actualizar  c
@@ -78,5 +95,15 @@ export function crearTrackingBus({
 
         marker.setLatLng([data.lat, data.lng]);
         actualizar(data.lat, data.lng);
+    });
+
+    // Actualizar peso de líneas cuando cambia el zoom
+    map.on('zoom', () => {
+        if (lineaRecorrida) {
+            lineaRecorrida.setStyle({ weight: getWeightForZoom(8) });
+        }
+        if (lineaPendiente) {
+            lineaPendiente.setStyle({ weight: getWeightForZoom(8) });
+        }
     });
 }
