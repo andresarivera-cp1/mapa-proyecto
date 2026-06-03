@@ -13,8 +13,8 @@ export function crearMapa() {
     }).addTo(map);
 
     const popayanBounds = L.latLngBounds([
-        [2.35, -76.72],
-        [2.53, -76.50]
+        [2.38, -76.72],
+        [2.56, -76.50]
     ]);
     map.setMaxBounds(popayanBounds);
 
