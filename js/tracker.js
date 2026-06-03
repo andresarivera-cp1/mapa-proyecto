@@ -62,7 +62,7 @@ export function crearTrackingBus({
             lineaPendiente = L.polyline([], {
                 color,
                 weight: 8,
-                opacity: 0.7,
+                opacity: 0.5,
                 lineCap: 'round'
             }).addTo(map);
         }
