@@ -16,7 +16,7 @@ export function crearMapa() {
         [2.35, -76.72],
         [2.53, -76.54]
     ]);
-    map.setMaxBounds(popayanBounds);
+   // map.setMaxBounds(popayanBounds);
 
     const busIcon = L.icon({
         iconUrl: 'img/auto1.png',
