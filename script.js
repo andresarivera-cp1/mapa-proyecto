@@ -2,6 +2,7 @@ console.log("VERSION 2.0 Monitoreo de buses ");
 // Importar firebase 
 import { crearTrackingBus } from "./js/tracker.js";
 import { crearMapa, crearMarcadoresLugares } from "./js/map.js";
+import { cargarClimaPopayan } from "./js/weather.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 import { set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"; //enviarvectorruta
@@ -87,7 +88,7 @@ toggle.addEventListener('click', () => {
 const saved = localStorage.getItem('sidebarCollapsed');
 if (saved === '1') setSidebarCollapsed(true);
 
-
+cargarClimaPopayan();
 
 crearTrackingBus({
     map,

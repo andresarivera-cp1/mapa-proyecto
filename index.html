@@ -31,6 +31,17 @@
     <!-- MAPA -->
     <div id="map">
       <button id="sidebar-toggle" aria-expanded="true" aria-label="Alternar barra lateral">◀</button>
+      <div id="weather-card" class="weather-card" aria-live="polite">
+        <div class="weather-card__header">Clima en Popayán</div>
+        <div class="weather-card__body">
+          <div class="weather-card__temp" id="weather-temp">--°C</div>
+          <div class="weather-card__condition" id="weather-condition">Cargando...</div>
+          <div class="weather-card__info">
+            <span id="weather-wind">Viento -- km/h</span>
+            <span id="weather-time">Hora --:--</span>
+          </div>
+        </div>
+      </div>
     </div>
 
   </main>
