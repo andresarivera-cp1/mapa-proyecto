@@ -6,7 +6,7 @@ export function crearMapa() {
         zoom: 15,
         minZoom: 13,
         maxZoom: 19
-    }).setView([2.4448, -76.6090], 13);
+    }).setView([2.4448, -76.6070], 13);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
