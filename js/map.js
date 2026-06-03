@@ -37,3 +37,23 @@ export function crearMapa() {
 
     return { map, busIcon, busIcon2, marker, marker2 };
 }
+
+export function crearMarcadoresLugares(map, lugares) {
+    return lugares.map((lugar) => {
+        const lugarIcon = L.icon({
+            iconUrl: lugar.iconUrl,
+            iconSize: lugar.iconSize || [40, 40],
+            iconAnchor: lugar.iconAnchor || [20, 40],
+            popupAnchor: lugar.popupAnchor || [0, -40]
+        });
+
+        const marker = L.marker(lugar.coords, { icon: lugarIcon }).addTo(map);
+
+        if (lugar.popup) {
+            marker.bindPopup(lugar.popup);
+        }
+
+        return marker;
+    });
+}
+

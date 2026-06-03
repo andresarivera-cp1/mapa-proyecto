@@ -1,7 +1,7 @@
 console.log("VERSION 2.0 Monitoreo de buses ");
 // Importar firebase 
 import { crearTrackingBus } from "./js/tracker.js";
-import { crearMapa } from "./js/map.js";
+import { crearMapa, crearMarcadoresLugares } from "./js/map.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 import { set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"; //enviarvectorruta
@@ -21,6 +21,21 @@ const db = getDatabase(app);
 
 // MAPA
 const { map, marker, marker2 } = crearMapa();
+
+const lugares = [
+    {
+        coords: [2.4510135000524413, -76.59913795289654],
+        iconUrl: 'img/lugar1.png',
+        popup: 'Lugar especial 1'
+    },
+    {
+        coords: [2.446918364817143, -76.59763764241958],
+        iconUrl: 'img/lugar1.png',
+        popup: 'Lugar especial 2'
+    }
+];
+
+const marcadoresLugares = crearMarcadoresLugares(map, lugares);
 
 // Sidebar toggle behavior: collapse/expand with a button
 const sidebar = document.getElementById('sidebar');
