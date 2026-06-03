@@ -41,5 +41,4 @@ export async function cargarClimaPopayan() {
     weatherCondition.textContent = 'No disponible';
     weatherWind.textContent = 'Intenta recargar';
   }
-  }
 }
