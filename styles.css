@@ -15,9 +15,10 @@ body {
 #banner {
   height: 180px;
   background-image: url("img/banner.jpg");
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  background-color: #1e293b;
 }
 
 /* CONTENEDOR PRINCIPAL */
