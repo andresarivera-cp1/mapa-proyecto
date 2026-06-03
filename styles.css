@@ -62,6 +62,43 @@ body {
   transition: opacity 200ms ease 0s;
 }
 
+#sidebar .sidebar-box {
+  margin-bottom: 1.25rem;
+}
+
+#sidebar .sidebar-box h2 {
+  font-size: 1rem;
+  margin-bottom: 0.6rem;
+  color: #0f172a;
+}
+
+#sidebar .sidebar-box p {
+  color: #334155;
+  line-height: 1.5;
+  margin-bottom: 0.8rem;
+}
+
+#sidebar .legend-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.8rem;
+}
+
+#sidebar .legend-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #0f172a;
+}
+
+#sidebar .legend-list img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
 #sidebar.collapsed #sidebar-content {
   opacity: 0;
   pointer-events: none;
