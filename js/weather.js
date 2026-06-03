@@ -25,7 +25,6 @@ export async function cargarClimaPopayan() {
   const weatherTemp = document.getElementById('weather-temp');
   const weatherCondition = document.getElementById('weather-condition');
   const weatherWind = document.getElementById('weather-wind');
-  const weatherTime = document.getElementById('weather-time');
 
   try {
     const respuesta = await fetch(url);
@@ -38,13 +37,9 @@ export async function cargarClimaPopayan() {
     weatherTemp.textContent = `${Math.round(clima.temperature)}°C`;
     weatherCondition.textContent = weatherCodeToLabel(clima.weathercode);
     weatherWind.textContent = `Viento ${Math.round(clima.windspeed)} km/h`;
-    weatherTime.textContent = new Date(clima.time).toLocaleTimeString('es-CO', {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
   } catch (error) {
     weatherCondition.textContent = 'No disponible';
     weatherWind.textContent = 'Intenta recargar';
-    weatherTime.textContent = '--:--';
+  }
   }
 }
