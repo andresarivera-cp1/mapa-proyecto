@@ -89,6 +89,7 @@ const saved = localStorage.getItem('sidebarCollapsed');
 if (saved === '1') setSidebarCollapsed(true);
 
 cargarClimaPopayan();
+setInterval(cargarClimaPopayan, 5 * 60 * 1000); // actualizar clima cada 5 minutos
 
 crearTrackingBus({
     map,
