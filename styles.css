@@ -42,7 +42,10 @@ body {
 /* SIDEBAR */
 #sidebar {
   width: 300px;
-  background: #e2e8f0;
+  background-image: url("img/slidebar.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   padding: 12px;
   
   font-size: 0.9rem;
