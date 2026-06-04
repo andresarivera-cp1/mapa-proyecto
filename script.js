@@ -27,6 +27,33 @@ const { map, marker, marker2 } = crearMapa();
 const marcadoresLugares = crearMarcadoresLugares(map, lugares);
 const marcadoresParadas = crearMarcadoresLugares(map, paradas);
 
+// Ajusta el tamaño de los iconos de las paradas según el nivel de zoom
+function updateParadaIconSizes() {
+  const zoom = map.getZoom();
+  const minZ = (map.options && map.options.minZoom) ? map.options.minZoom : 13;
+  const maxZ = (map.options && map.options.maxZoom) ? map.options.maxZoom : 19;
+  const t = Math.max(0, Math.min(1, (zoom - minZ) / (maxZ - minZ)));
+  const minSize = 16; // tamaño en px cuando está alejado
+  const maxSize = 28; // tamaño en px cuando está cercano
+  const size = Math.round(minSize + t * (maxSize - minSize));
+
+  marcadoresParadas.forEach((m, i) => {
+    const info = paradas[i] || {};
+    const iconUrl = info.iconUrl || 'img/auto1.png';
+    const icon = L.icon({
+      iconUrl: iconUrl,
+      iconSize: [size, size],
+      iconAnchor: [Math.round(size / 2), size],
+      popupAnchor: [0, -size]
+    });
+    m.setIcon(icon);
+  });
+}
+
+map.on('zoomend', updateParadaIconSizes);
+// inicializar tamaños según zoom actual
+updateParadaIconSizes();
+
 // Sidebar toggle behavior: collapse/expand with a button
 const sidebar = document.getElementById('sidebar');
 const toggle = document.getElementById('sidebar-toggle');
