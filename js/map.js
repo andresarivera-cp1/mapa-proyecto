@@ -1,24 +1,24 @@
 export function crearMapa() {
-    // variable global para compatibilidad con el código existente
+    // variable global para el control de la ruta 
     window.ruta = [];
 
     const map = L.map('map', {
         zoom: 15,
         minZoom: 13,
         maxZoom: 19
-    }).setView([2.4448, -76.6070], 13);
+    }).setView([2.4448, -76.6070], 13);  //coordenadas zoom central
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
     }).addTo(map);
 
-    const popayanBounds = L.latLngBounds([
+    const popayanBounds = L.latLngBounds([  //limites de popayan para el mapa
         [2.38, -76.72],
         [2.56, -76.50]
     ]);
     map.setMaxBounds(popayanBounds);
 
-    const busIcon = L.icon({
+    const busIcon = L.icon({ //funcion crear icono para el bus
         iconUrl: 'img/auto1.png',
         iconSize: [40, 40],
         iconAnchor: [20, 20],
@@ -38,7 +38,7 @@ export function crearMapa() {
     return { map, busIcon, busIcon2, marker, marker2 };
 }
 
-function crearIcono(lugar) {
+function crearIcono(lugar) {   // funcion para crear iconos para lugares
     return L.icon({
         iconUrl: lugar.iconUrl,
         iconSize: lugar.iconSize || [40, 40],
@@ -47,7 +47,7 @@ function crearIcono(lugar) {
     });
 }
 
-function crearIconoHover(icon) {
+function crearIconoHover(icon) { //fncion icono movimiento
     const size = icon.options.iconSize || [40, 40];
     const scale = 1.15;
     const hoverSize = [Math.round(size[0] * scale), Math.round(size[1] * scale)];

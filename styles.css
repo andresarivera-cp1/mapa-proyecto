@@ -1,3 +1,5 @@
+/* CSS personaliza visualmente la pagina */
+
 /* quitar espacios raros del navegador */
 * {
   margin: 0;
@@ -16,7 +18,7 @@ body {
   font-family: Arial;
 }
 
-/* BANNER */
+/* Banner */
 #banner {
   height: auto;
   overflow: hidden;
@@ -31,7 +33,7 @@ body {
   display: block;
 }
 
-/* CONTENEDOR PRINCIPAL */
+/* Contenedor principal */
 #layout {
   flex: 1;
   display: flex;
@@ -39,7 +41,7 @@ body {
   overflow: hidden;
 }
 
-/* SIDEBAR */
+/* Sidebar o barra lateral */
 #sidebar {
   width: 300px;
   background-image: url("img/slider.jpg");
@@ -55,7 +57,7 @@ body {
   min-width: 0;
 }
 
-/* when collapsed */
+/* cuando colapasa */
 #sidebar.collapsed {
   width: 0;
   padding-left: 0;
@@ -119,7 +121,7 @@ body {
   pointer-events: none;
 }
 
-/* Toggle button */
+/* Boton de barra lateral */
 #map { position: relative; }
 
 #sidebar-toggle {
@@ -143,7 +145,7 @@ body {
 
 #sidebar-toggle:focus { outline: 2px solid #93c5fd; }
 
-/* rotate the map button when sidebar is collapsed (sibling selector) */
+/* rotar el mapa cuando colapsa barra lateral */
 #sidebar.collapsed + #map #sidebar-toggle {
   transform: rotate(180deg);
   left: 8px;

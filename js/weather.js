@@ -17,6 +17,7 @@ export function weatherCodeToLabel(code) {
   }
 }
 
+//funcion para conectar API de clima y sincronizar
 export async function cargarClimaPopayan() {
   const lat = 2.4448;
   const lon = -76.6070;

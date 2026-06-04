@@ -58,7 +58,7 @@ export function crearTrackingBus({
             lineaRecorrida = L.polyline([], {
                 color,
                 weight: 8,
-                opacity: 0.2,
+                opacity: 0.2,  //opacidad linea recorrida
                 dashArray: '10, 15',
                 lineCap: 'round',
                 lineJoin: 'round',
@@ -70,14 +70,14 @@ export function crearTrackingBus({
             lineaPendiente = L.polyline([], {
                 color,
                 weight: 8,
-                opacity: 0.5,
+                opacity: 0.5,  //opacidad linea pendiente
                 lineCap: 'round',
                 lineJoin: 'round',
                 interactive: false
             }).addTo(map);
         }
 
-        // Ajustar peso dinámicamente según zoom
+        // Ajustar animacion trazo linea
         const weightRecorrida = getWeightForZoom(8);
         const weightPendiente = getWeightForZoom(8);
         
@@ -85,7 +85,7 @@ export function crearTrackingBus({
         lineaPendiente.setStyle({ weight: weightPendiente });
 
         //Actualizar
-        lineaRecorrida.setLatLngs(parteRecorrida);   //actualizar  c
+        lineaRecorrida.setLatLngs(parteRecorrida);  
         lineaPendiente.setLatLngs(partePendiente);
     }
 

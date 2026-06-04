@@ -1,5 +1,5 @@
-console.log("VERSION 2.0 Monitoreo de buses ");
-// Importar firebase 
+console.log("VERSION 2.0 FLOW CITY AKRD");
+// Importar firebase y funciones a usar
 import { crearTrackingBus } from "./js/tracker.js";
 import { crearMapa, crearMarcadoresLugares } from "./js/map.js";
 import { lugares, paradas } from "./js/data.js";
@@ -17,13 +17,12 @@ const firebaseConfig = {
   projectId: "flowcity1-44199"
 };
 
-// INICIALIZAR
+//Iniciar comunicación con Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// MAPA
+// Crear mapa y marcadores
 const { map, marker, marker2 } = crearMapa();
-
 const marcadoresLugares = crearMarcadoresLugares(map, lugares);
 const marcadoresParadas = crearMarcadoresLugares(map, paradas);
 
@@ -51,6 +50,7 @@ function updateParadaIconSizes() {
 }
 
 map.on('zoomend', updateParadaIconSizes);
+
 // limitar tamaño máximo de iconos de lugares solo en zoom máximo
 function updateLugarMaxSize() {
   const zoom = map.getZoom();
@@ -76,7 +76,7 @@ map.on('zoomend', () => { updateParadaIconSizes(); updateLugarMaxSize(); });
 updateParadaIconSizes();
 updateLugarMaxSize();
 
-// Sidebar toggle behavior: collapse/expand with a button
+// Sidebar boton colapsar/expandir
 const sidebar = document.getElementById('sidebar');
 const toggle = document.getElementById('sidebar-toggle');
 
@@ -102,12 +102,12 @@ toggle.addEventListener('click', () => {
   setSidebarCollapsed(collapsed);
 });
 
-// restore state from localStorage
+// recuperar estado del sidebar al cargar
 const saved = localStorage.getItem('sidebarCollapsed');
 if (saved === '1') setSidebarCollapsed(true);
 
 cargarClimaPopayan();
-setInterval(cargarClimaPopayan, 5 * 60 * 1000); // actualizar clima cada 5 minutos
+setInterval(cargarClimaPopayan, 3 * 60 * 1000); // actualizar clima cada 3 minutos
 
 // Agregar funcionalidad al clima para mostrar imagen al hacer clic
 const weatherCard = document.getElementById('weather-card');
@@ -139,6 +139,7 @@ weatherCard.addEventListener('click', () => {
   }
 });
 
+//funciones para crear las rutas
 crearTrackingBus({
     map,
     busRef: ref(db, "bus1"),
