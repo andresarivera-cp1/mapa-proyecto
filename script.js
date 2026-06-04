@@ -51,8 +51,30 @@ function updateParadaIconSizes() {
 }
 
 map.on('zoomend', updateParadaIconSizes);
+// limitar tamaño máximo de iconos de lugares solo en zoom máximo
+function updateLugarMaxSize() {
+  const zoom = map.getZoom();
+  const maxZ = (map.options && map.options.maxZoom) ? map.options.maxZoom : 19;
+  const maxAllowed = 44; // tamaño máximo permitido en px en zoom máximo
+
+  marcadoresLugares.forEach((m, i) => {
+    const info = lugares[i] || {};
+    const orig = (info.iconSize && info.iconSize[0]) || 40;
+    const size = zoom >= maxZ ? Math.min(orig, maxAllowed) : orig;
+    const icon = L.icon({
+      iconUrl: info.iconUrl || 'img/lugar1.png',
+      iconSize: [size, size],
+      iconAnchor: [Math.round(size / 2), size],
+      popupAnchor: [0, -size]
+    });
+    m.setIcon(icon);
+  });
+}
+
 // inicializar tamaños según zoom actual
+map.on('zoomend', () => { updateParadaIconSizes(); updateLugarMaxSize(); });
 updateParadaIconSizes();
+updateLugarMaxSize();
 
 // Sidebar toggle behavior: collapse/expand with a button
 const sidebar = document.getElementById('sidebar');
