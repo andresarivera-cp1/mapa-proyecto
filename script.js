@@ -111,17 +111,22 @@ setInterval(cargarClimaPopayan, 5 * 60 * 1000); // actualizar clima cada 5 minut
 
 // Agregar funcionalidad al clima para mostrar imagen al hacer clic
 const weatherCard = document.getElementById('weather-card');
+const weatherHeader = weatherCard.querySelector('.weather-card__header');
 let isImageShowing = false;
+
+weatherCard.style.cursor = 'pointer';
 
 weatherCard.addEventListener('click', () => {
   const weatherBody = weatherCard.querySelector('.weather-card__body');
   
   if (!isImageShowing) {
-    // Reemplazar contenido con imagen
-    weatherBody.innerHTML = '<img src="img/logcomp.png" alt="Logo" style="width: 100%; height: auto; border-radius: 8px;">';
+    // Ocultar header y reemplazar contenido con imagen
+    weatherHeader.style.display = 'none';
+    weatherBody.innerHTML = '<img src="img/logcomp.png" alt="Logo" style="width: 140px; height: 140px; object-fit: contain; margin: 0 auto; display: block; border-radius: 8px;">';
     isImageShowing = true;
   } else {
-    // Restaurar contenido original del clima
+    // Mostrar header y restaurar contenido original del clima
+    weatherHeader.style.display = 'block';
     weatherBody.innerHTML = `
       <div class="weather-card__temp" id="weather-temp">--°C</div>
       <div class="weather-card__condition" id="weather-condition">Cargando...</div>
