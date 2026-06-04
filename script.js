@@ -33,8 +33,8 @@ function updateParadaIconSizes() {
   const minZ = (map.options && map.options.minZoom) ? map.options.minZoom : 13;
   const maxZ = (map.options && map.options.maxZoom) ? map.options.maxZoom : 19;
   const t = Math.max(0, Math.min(1, (zoom - minZ) / (maxZ - minZ)));
-  const minSize = 16; // tamaño en px cuando está alejado
-  const maxSize = 28; // tamaño en px cuando está cercano
+  const minSize = 18; // tamaño en px cuando está alejado
+  const maxSize = 34; // tamaño en px cuando está cercano
   const size = Math.round(minSize + t * (maxSize - minSize));
 
   marcadoresParadas.forEach((m, i) => {
