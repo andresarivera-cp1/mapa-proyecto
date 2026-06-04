@@ -33,8 +33,8 @@ function updateParadaIconSizes() {
   const minZ = (map.options && map.options.minZoom) ? map.options.minZoom : 13;
   const maxZ = (map.options && map.options.maxZoom) ? map.options.maxZoom : 19;
   const t = Math.max(0, Math.min(1, (zoom - minZ) / (maxZ - minZ)));
-  const minSize = 22; // tamaño en px cuando está alejado
-  const maxSize = 34; // tamaño en px cuando está cercano
+  const minSize = 24; // tamaño en px cuando está alejado
+  const maxSize = 38; // tamaño en px cuando está cercano
   const size = Math.round(minSize + t * (maxSize - minSize));
 
   marcadoresParadas.forEach((m, i) => {
@@ -55,7 +55,7 @@ map.on('zoomend', updateParadaIconSizes);
 function updateLugarMaxSize() {
   const zoom = map.getZoom();
   const maxZ = (map.options && map.options.maxZoom) ? map.options.maxZoom : 19;
-  const maxAllowed = 40; // tamaño máximo permitido en px en zoom máximo
+  const maxAllowed = 38; // tamaño máximo permitido en px en zoom máximo
 
   marcadoresLugares.forEach((m, i) => {
     const info = lugares[i] || {};
