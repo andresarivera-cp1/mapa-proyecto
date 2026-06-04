@@ -87,13 +87,13 @@ body {
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 0.5rem;
+  gap: 0.3rem;
 }
 
 #sidebar .legend-list li {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.4rem;
   color: #0f172a;
   font-size: 0.8rem;
   line-height: 1.2;
