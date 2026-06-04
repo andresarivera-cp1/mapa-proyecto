@@ -2,6 +2,7 @@ console.log("VERSION 2.0 Monitoreo de buses ");
 // Importar firebase 
 import { crearTrackingBus } from "./js/tracker.js";
 import { crearMapa, crearMarcadoresLugares } from "./js/map.js";
+import { lugares, paradas } from "./js/data.js";
 import { cargarClimaPopayan } from "./js/weather.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -23,40 +24,8 @@ const db = getDatabase(app);
 // MAPA
 const { map, marker, marker2 } = crearMapa();
 
-const lugares = [
-    {
-        coords: [2.4510135000524413, -76.59913795289654],
-        iconUrl: 'img/lugar1.png',
-        popup: 'Facultad de Salud'
-    },
-    {
-        coords: [2.446918364817143, -76.59763764241958],
-        iconUrl: 'img/lugar2.png',
-        popup: 'Facultad de Contables'
-    },
-    {
-        coords: [2.4458887205340663, -76.59814801146317],
-        iconUrl: 'img/lugar3.png',
-        popup: 'Facultad de Ingeniería civil'
-    },
-    {
-        coords: [2.4463101213632137, -76.60043562986958],
-        iconUrl: 'img/lugar4.png',
-        popup: 'Facultad de Educación'
-    },
-        {
-        coords: [2.441524668419758, -76.6035057023519],
-        iconUrl: 'img/lugar5.png',
-        popup: 'Facultad de Ciencias Sociales/Humanidades'
-    },
-    {
-        coords: [2.4417364484593755, -76.60471300594388],
-        iconUrl: 'img/lugar6.png',
-        popup: 'Facultad de Derecho'
-    },
-];
-
 const marcadoresLugares = crearMarcadoresLugares(map, lugares);
+const marcadoresParadas = crearMarcadoresLugares(map, paradas);
 
 // Sidebar toggle behavior: collapse/expand with a button
 const sidebar = document.getElementById('sidebar');
