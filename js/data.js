@@ -41,7 +41,7 @@ export const paradas = [
     coords: [2.4814196289321684, -76.57085507322911],
     iconUrl: 'img/par.png',
     popup: 'Parada Puente Carrera 9'
-  }
+  },
    {
     coords: [2.4800151978471106, -76.57538877159614],
     iconUrl: 'img/par.png',
@@ -51,7 +51,7 @@ export const paradas = [
     coords: [2.4764994309744313, -76.5783499303442],
     iconUrl: 'img/par.png',
     popup: 'Parada Villa del Viento'
-  }
+  },
    {
     coords: [2.4603782344124965, -76.59264073933996],
     iconUrl: 'img/par.png',
@@ -61,7 +61,7 @@ export const paradas = [
     coords: [2.44748328056544, -76.59765110657865],
     iconUrl: 'img/par.png',
     popup: 'Parada Universidad del Cauca'
-  }
+  },
    {
     coords: [2.436185355356433, -76.61347613954999],
     iconUrl: 'img/par.png',
@@ -71,7 +71,7 @@ export const paradas = [
     coords: [2.4458101737341584, -76.61430733436504],
     iconUrl: 'img/par.png',
     popup: 'Parada La esmeralda'
-  }
+  },
    {
     coords: [2.4504193626910578, -76.60797732128579],
     iconUrl: 'img/par.png',
