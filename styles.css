@@ -111,7 +111,7 @@ body {
 }
 
 #sidebar .legend-list li:hover img {
-  transform: scale(1.15);
+  transform: scale(1.25);
 }
 
 #sidebar.collapsed #sidebar-content {
