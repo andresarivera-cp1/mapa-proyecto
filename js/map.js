@@ -38,19 +38,61 @@ export function crearMapa() {
     return { map, busIcon, busIcon2, marker, marker2 };
 }
 
+function crearIcono(lugar) {
+    return L.icon({
+        iconUrl: lugar.iconUrl,
+        iconSize: lugar.iconSize || [40, 40],
+        iconAnchor: lugar.iconAnchor || [20, 40],
+        popupAnchor: lugar.popupAnchor || [0, -40]
+    });
+}
+
+function crearIconoHover(icon) {
+    const size = icon.options.iconSize || [40, 40];
+    const scale = 1.15;
+    const hoverSize = [Math.round(size[0] * scale), Math.round(size[1] * scale)];
+    const anchor = icon.options.iconAnchor
+        ? [Math.round(icon.options.iconAnchor[0] * scale), Math.round(icon.options.iconAnchor[1] * scale)]
+        : [Math.round(hoverSize[0] / 2), hoverSize[1]];
+
+    return L.icon({
+        iconUrl: icon.options.iconUrl,
+        iconSize: hoverSize,
+        iconAnchor: anchor,
+        popupAnchor: icon.options.popupAnchor || [0, -hoverSize[1]]
+    });
+}
+
 export function crearMarcadoresLugares(map, lugares) {
     return lugares.map((lugar) => {
-        const lugarIcon = L.icon({
-            iconUrl: lugar.iconUrl,
-            iconSize: lugar.iconSize || [40, 40],
-            iconAnchor: lugar.iconAnchor || [20, 40],
-            popupAnchor: lugar.popupAnchor || [0, -40]
-        });
-
+        const lugarIcon = crearIcono(lugar);
+        const hoverIcon = crearIconoHover(lugarIcon);
         const marker = L.marker(lugar.coords, { icon: lugarIcon }).addTo(map);
 
         if (lugar.popup) {
-            marker.bindPopup(lugar.popup);
+            marker.bindPopup(lugar.popup, {
+                closeButton: false,
+                closeOnClick: false,
+                autoClose: false,
+                autoPan: false
+            });
+
+            marker.on('mouseover', function () {
+                this.setIcon(hoverIcon);
+                this.openPopup();
+            });
+
+            marker.on('mouseout', function () {
+                this.closePopup();
+                this.setIcon(lugarIcon);
+            });
+
+            marker.on('click', function (event) {
+                if (event.originalEvent) {
+                    event.originalEvent.preventDefault();
+                    event.originalEvent.stopPropagation();
+                }
+            });
         }
 
         return marker;
