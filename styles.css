@@ -136,12 +136,14 @@ body {
 /* rotate the map button when sidebar is collapsed (sibling selector) */
 #sidebar.collapsed + #map #sidebar-toggle {
   transform: rotate(180deg);
+  left: 8px;
 }
 
 /* MAPA */
 #map {
   flex: 1;
   position: relative;
+  overflow: hidden;
 }
 
 .weather-card {
