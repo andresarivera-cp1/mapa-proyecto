@@ -109,6 +109,31 @@ if (saved === '1') setSidebarCollapsed(true);
 cargarClimaPopayan();
 setInterval(cargarClimaPopayan, 5 * 60 * 1000); // actualizar clima cada 5 minutos
 
+// Agregar funcionalidad al clima para mostrar imagen al hacer clic
+const weatherCard = document.getElementById('weather-card');
+let isImageShowing = false;
+
+weatherCard.addEventListener('click', () => {
+  const weatherBody = weatherCard.querySelector('.weather-card__body');
+  
+  if (!isImageShowing) {
+    // Reemplazar contenido con imagen
+    weatherBody.innerHTML = '<img src="img/logcomp.png" alt="Logo" style="width: 100%; height: auto; border-radius: 8px;">';
+    isImageShowing = true;
+  } else {
+    // Restaurar contenido original del clima
+    weatherBody.innerHTML = `
+      <div class="weather-card__temp" id="weather-temp">--°C</div>
+      <div class="weather-card__condition" id="weather-condition">Cargando...</div>
+      <div class="weather-card__info">
+        <span id="weather-wind">Viento -- km/h</span>
+      </div>
+    `;
+    isImageShowing = false;
+    cargarClimaPopayan(); // Recargar datos del clima
+  }
+});
+
 crearTrackingBus({
     map,
     busRef: ref(db, "bus1"),
