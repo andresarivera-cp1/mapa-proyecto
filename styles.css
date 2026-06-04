@@ -107,6 +107,11 @@ body {
   height: 20px;
   object-fit: contain;
   flex-shrink: 0;
+  transition: transform 180ms ease;
+}
+
+#sidebar .legend-list li:hover img {
+  transform: scale(1.15);
 }
 
 #sidebar.collapsed #sidebar-content {
