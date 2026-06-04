@@ -20,6 +20,7 @@ body {
 #banner {
   height: auto;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 #banner img {
@@ -32,9 +33,10 @@ body {
 
 /* CONTENEDOR PRINCIPAL */
 #layout {
-  flex: 1 1 auto;
+  flex: 1;
   display: flex;
   min-height: 0;
+  overflow: hidden;
 }
 
 /* SIDEBAR */
